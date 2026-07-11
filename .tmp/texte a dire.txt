@@ -1,0 +1,59 @@
+texte a dire : 
+
+slide 1 : 
+Bonjour, nous allons vous présenter notre projet de Cellule de Veille Stratégique automatisée (SMA). 
+Notre objectif a été de concevoir un système intelligent, autonome et fiable pour extraire et analyser des informations stratégiques.
+
+slide 2 :
+Nous commencerons par exposer la problématique liée les veille manuelle, puis nous détaillerons notre solutions  RAGhybrid et s multi-agents et ses architecture technique.
+Enfin, nous présenterons l’implémentation, les expérimentations réalisées, avant de conclure par une démonstration du système.
+
+slide 3 :
+Aujourd'hui, une entreprise doit constamment surveiller son environnement. 
+Le problème est que les décideurs doivent croiser des notes internes confidentielles avec l'actualité web. 
+Faire cela manuellement prend des jours. Nous voulions automatiser ce processus.
+
+slide 4 :
+"Pourquoi ne pas juste utiliser ChatGPT ? Parce qu'un simple prompt risque de générer des hallucinations. Dans un contexte d'entreprise (budget, roadmap), une fausse information est catastrophique. 
+Notre défi technique majeur était d'intégrer un mécanisme de vérification absolu."
+
+slide 5 :
+Pour résoudre ce problème de fiabilité, nous avons mis en place un RAG Hybride. D'un côté, nous ingérons les documents de l'entreprise via ChromaDB. De l'autre, nous connectons des APIs web. L'IA est obligée de sourcer ses affirmations dans ces bases
+
+slide 6 : 
+Techniquement, nous avons choisi LangGraph. Pourquoi ? Parce qu'une chaîne classique est une ligne droite. LangGraph nous permet de créer des cycles : si le rapport final contient une erreur, on peut le renvoyer en arrière pour être corrigé. C'est l'essence même de notre solution.
+
+Slide 7 : 
+Le système démarre par un nœud Init qui initialise le cycle, puis le Coordinateur déclenche successivement le Scout qui collecte les tendances externes (GitHub, arXiv, RSS) et l'Analyste qui interroge la base documentaire interne via RAG. Leurs résultats convergent vers le Comparateur qui effectue une analyse hybride croisant les deux sources, avant d'être transmis au Rédacteur qui génère le rapport stratégique final. Ce rapport est ensuite soumis au Validateur anti-hallucination : en cas d'erreurs détectées (STATUS: FAIL), il est renvoyé au Rédacteur pour correction (jusqu'à 2 tentatives) ; une fois validé (STATUS: PASS), le workflow se termine
+
+Slide 8 :
+agent SCOUT equipé de plusieurs outil de web scraping pour capter les tendance du marché.
+agent ANALYSTE qui interroger la base ChromaDB interne, renforcer par un prompt strict
+agent comparateur : les resulats d'agent scout et d'agent analyst
+Chaque agent a un prompt  spécifique. 
+L'Analyste, par exemple, a l'interdiction formelle d'inventer des faits : s'il ne trouve rien dans ChromaDB, il doit répondre 'Information non disponible'. Le Comparateur est le cerveau qui fait le lien entre l'interne et l'externe.
+
+
+Slide 9 : 
+"Le Validateur est notre assurance qualité. Il relit le rapport et le confronte aux sources. S'il détecte un chiffre inventé, il bloque la sortie et renvoie le rapport au Rédacteur avec ses remarques. Le Coordinateur limite cette boucle à 2 essais maximum."
+
+
+Slide 10 : 
+Au niveau du code, la clé de voûte est l'objet VeilleState. C'est un dictionnaire partagé entre tous les agents. Nous avons utilisé un réducteur (operator.add) sur les logs pour permettre au Scout et à l'Analyste de tourner en parallèle (Fan-out) sans créer de conflit mémoire."
+
+slide 11 : 
+Voici comment nous avons codé la boucle conditionnelle. Une simple fonction python analyse le statut renvoyé par le LLM Validateur. 
+pour le developpement de l'application ona chisie streamlit, un Framework simple qui offre une separation MVC : le back-end d'un côté, le front-end Streamlit de l'autre, et la génération PDF à part.
+
+Slide 12 :
+Lors de nos tests, le système a prouvé son efficacité. Quand il a trouvé un sujet non couvert par l'entreprise, l'Analyste refuse d'inventer des données. 
+Le pipeline global est un peu long mais offre une résultat fiable, et l'export PDF final est d'une qualité prête à être présentée en comité de direction.
+
+
+Slide 13 :
+Nous avons rencontré deux grands problèmes. Le premier : le validateur tournait en boucle car le modèle LLM était trop bavard. Nous avons dû formater sa sortie avec des balises strictes. Le second : les coupures d'API. Nous avons dû coder un système de reconnexion automatique avec délai.
+
+
+Slide 14 :
+En conclusion, nous avons prouvé qu'une architecture multi-agents bien pensée résout le problème de l'hallucination. La prochaine étape pour une entreprise serait de faire tourner ces modèles d'IA en local sur leurs propres serveurs pour s'affranchir du Cloud. Nous allons maintenant vous le démontrer en direct.
+

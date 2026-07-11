@@ -1,0 +1,16 @@
+streamlit==1.32.2
+langchain
+langchain-openai
+langchain-community
+langchain-chroma
+langchain-huggingface
+langgraph
+sentence-transformers
+chromadb
+pypdf
+feedparser
+apscheduler
+duckduckgo-search
+reportlab
+python-dotenv
+torchvision

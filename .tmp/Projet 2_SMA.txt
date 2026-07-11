@@ -1,0 +1,42 @@
+Projet 2
+Cellule Automatisée de Veille Technologique & Stratégique 
+1. Contexte & Problématique Dans un secteur en évolution rapide comme l'IA, les entreprises peinent à suivre l'émergence de nouveaux frameworks, modèles et tendances. La veille manuelle est chronophage et incomplète. Un système autonome capable de surveiller, croiser avec la connaissance interne, et synthétiser apporterait un avantage stratégique majeur.
+
+2. Objectif du projet
+Concevoir un SMA autonome qui surveille en continu les tendances d'un marché ciblé (frameworks IA, papers, releases GitHub), les croise avec la base documentaire interne d'une entreprise simulée, et produit périodiquement un rapport de synthèse stratégique.
+
+3. Compétences pédagogiques mobilisées
+Ce projet permet aux étudiants de mettre en œuvre concrètement les notions vues durant le semestre :
+• Tool calling avancé (web search, scraping, API GitHub, arXiv)
+• RAG hybride : sources externes en temps réel + base interne
+• Orchestration d'agents spécialisés avec planification (ReAct)
+• Synthèse multi-documents et détection de signaux faibles
+
+4. Architecture multi-agents proposée
+Le système est composé de plusieurs agents spécialisés qui collaborent. Cette architecture permet
+d'évaluer la capacité des étudiants à orchestrer la communication inter-agents, élément central du
+chapitre 3 du module.
+
+Agent ; Rôle / Mission ; Outils & Techniques
+-Agent Scout Web ; Surveille blogs tech, arXiv, GitHub trending, Hacker News pour détecter les nouveautés IA. : @tool web search, scraping, RSS
+-Agent Analyste Interne ; Interroge la base interne RAG pour identifier ce que l'entreprise sait déjà et ses positions stratégiques. ; RAG, embeddings
+-Agent Comparateur ; Croise sources externes et internes : qu'est-ce qui est nouveau ? Quel est l'impact pour l'entreprise ? ; Chain-of-Thought, prompts comparatifs
+-Agent Rédacteur ; Produit un rapport structuré (résumé exécutif, tendances clés, recommandations) au format Markdown ou PDF. ; Prompt structuré, génération longue
+-Agent Coordinateur ; Planifie l'exécution, distribue les tâches, gère les retours et la cohérence finale. ; ReAct, planification
+
+5. Étapes de réalisation 
+-1 Définition du périmètre : Choisir un marché cible (ex : frameworks d'agents IA, edge computing). Lister les sources à surveiller.
+-2 Collecte automatisée : Implémenter les outils de collecte : web search, API GitHub (trendingrepos), API arXiv, parsing RSS.
+-3 Base interne simulée : Construire une base documentaire fictive d'entreprise (rapports, mémos, stratégie) pour le RAG interne.
+-4 Pipeline RAG hybride : Mettre en place deux index séparés (externe / interne) et un retriever capable de les interroger conjointement.
+-5 Logique d'analyse : Définir les prompts du Comparateur pour détecter nouveautés, ruptures, opportunités, menaces.
+-6 Orchestration : Mettre en place le Coordinateur avec un cycle de veille (déclenchement manuel ou périodique).
+-7 Génération de rapport : Définir un template structuré : Executive Summary, Tendances Top 5, Détails techniques, Recommandations.
+-8 Tests & validation : Lancer 2-3 cycles complets et évaluer la qualité, la pertinence et l'absence d'hallucinations.
+
+
+
+
+
+
+
